@@ -113,13 +113,37 @@ ORDER BY COUNT(Occupation), Occupation ASC;
 
 
 # 3. Occupations (Medium)
-
+SELECT MAX(Doctor), MAX(Professor), MAX(Singer), MAX(Actor)
+FROM (SELECT CASE WHEN Occupation = 'Doctor' THEN name END AS Doctor
+      , CASE WHEN Occupation = 'Professor' THEN name END AS Professor
+      , CASE WHEN Occupation = 'Singer' THEN name END AS Singer
+      , CASE WHEN Occupation = 'Actor' THEN name END AS Actor
+      , RANK() OVER (PARTITION BY Occupation ORDER BY Name) AS list
+    FROM Occupations) x
+GROUP BY list
 
 # 4. Binary Tree Nodes (Medium)
-
+SELECT N, CASE 
+   WHEN P IS NULL THEN 'Root'
+   WHEN N IN (SELECT P FROM BST) THEN 'Inner'
+   ELSE 'Leaf'
+END
+FROM BST
+ORDER by N;
 
 # 5. New Companies (Medium)
-
+WITH e AS (
+    SELECT company_code,
+      COUNT(DISTINCT(lead_manager_code)) AS LM,
+      COUNT(DISTINCT(senior_manager_code)) AS SM,
+      COUNT(DISTINCT(manager_code)) AS MM,
+      COUNT(DISTINCT(employee_code)) AS EM
+    FROM Employee GROUP BY company_code)
+SELECT c.company_code, c.founder, e.LM, e.SM, e.MM, e.EM 
+FROM Company c
+LEFT JOIN e
+ON c.company_code = e.company_code
+ORDER BY c.company_code ASC
 
 
 /*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
@@ -175,10 +199,23 @@ D. Basic Join
 *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  */
 
 # 1. Asian Population (Easy)
+SELECT SUM(a.POPULATION) 
+FROM CITY a
+LEFT JOIN COUNTRY b ON a.COUNTRYCODE = b.CODE
+WHERE b.CONTINENT = 'ASIA';
 
 # 2. African Cities (Easy)
+SELECT a.NAME
+FROM CITY a
+LEFT JOIN COUNTRY b ON a.COUNTRYCODE = b.CODE
+WHERE b.CONTINENT = 'AFRICA';
 
 # 3. Average Population of Each Continent (Easy)
+SELECT a.CONTINENT, FLOOR(AVG(b.POPULATION))
+FROM COUNTRY a
+INNER JOIN CITY b
+ON b.COUNTRYCODE = a.CODE
+GROUP BY a.CONTINENT;
 
 # 4. The Report (Medium)
 
