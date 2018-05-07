@@ -88,18 +88,28 @@ ORDER BY employee_id ASC
 
 
 
-
-
 /*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
 B. Advanced Select
 *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  */
 
 
 # 1. Type of Triangle (Easy)
-
+SELECT CASE 
+  WHEN A + B > C AND A + C > B AND B + C > A THEN 
+    CASE WHEN A = B AND B = C THEN 'Equilateral' 
+    WHEN A = B OR B = C OR A = C THEN 'Isosceles' 
+    ELSE 'Scalene' END 
+  ELSE 'Not A Triangle' END 
+FROM TRIANGLES;
 
 # 2. The PADS (Medium)
-
+SELECT CONCAT(Name, '(', SUBSTRING(Occupation, 1, 1), ')') 
+FROM OCCUPATIONS 
+ORDER BY Name ASC;
+SELECT CONCAT('There are a total of ', COUNT(Occupation), ' ', LOWER(Occupation), 's.') 
+FROM OCCUPATIONS 
+GROUP BY Occupation 
+ORDER BY COUNT(Occupation), Occupation ASC;
 
 
 # 3. Occupations (Medium)
@@ -179,6 +189,16 @@ D. Basic Join
 # 7. Challenges (Medium)
 
 # 8. Contest Leaderboard (Medium)
+with b as (
+    SELECT c.hacker_id, c.challenge_id, max(c.score) as maxscore 
+    FROM (SELECT * FROM Submissions WHERE score > 0) as c 
+    GROUP BY hacker_id, challenge_id)
+SELECT a.hacker_id, a.name, sum(b.maxscore) as score
+FROM Hackers a
+LEFT JOIN b ON a.hacker_id = b.hacker_id
+GROUP BY a.hacker_id, a.name
+HAVING sum(b.maxscore) IS NOT NULL
+ORDER BY sum(b.maxscore) DESC, a.hacker_id ASC
 
 
 
