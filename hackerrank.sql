@@ -152,10 +152,15 @@ C. Aggregation
 
 
 # 1.  Revising Aggregations - The Count Function (Easy)
-
+SELECT COUNT(*)
+FROM CITY
+WHERE POPULATION > 100000
 
 # 2.  Revising Aggregations - The Sum Function (Easy)
-
+SELECT SUM(POPULATION)
+FROM CITY
+GROUP BY DISTRICT
+HAVING DISTRICT = 'California'
 
 # 3.  Revising Aggregations - Averages (Easy)
 
@@ -218,12 +223,50 @@ ON b.COUNTRYCODE = a.CODE
 GROUP BY a.CONTINENT;
 
 # 4. The Report (Medium)
+with s as (
+    SELECT ID, 
+    CASE WHEN Marks < 70 THEN 'NULL' ELSE Name END AS Student, 
+    Marks FROM Students
+) SELECT s.Student, g.Grade, s.Marks FROM s
+LEFT JOIN Grades g 
+ON s.Marks BETWEEN g.Min_Mark AND g.Max_Mark
+ORDER BY g.Grade DESC, s.Student ASC, s.Marks ASC
 
 # 5. Top Competitors (Medium)
+WITH s AS (
+    SELECT h.name as hacker, a.submission_id, a.hacker_id as id, a.challenge_id, a.score,
+           c.difficulty_level, d.score as maxscore
+    FROM Submissions a
+    LEFT JOIN Challenges c ON a.challenge_id = c.challenge_id
+    LEFT JOIN Difficulty d ON c.difficulty_level = d.difficulty_level
+    RIGHT JOIN Hackers h ON h.hacker_id = a.hacker_id)
+SELECT id, hacker FROM s
+WHERE score = maxscore
+GROUP BY id, hacker
+HAVING count(id) > 1
+ORDER BY count(id) DESC, id ASC
+
 
 # 6. Ollivander's Inventory (Medium)
 
+## REVIEW THIS
+
+SELECT wands.id, min_prices.age, wands.coins_needed, wands.power
+FROM wands
+inner join (SELECT wands.code, wands.power, min(wands_property.age) as age, min(wands.coins_needed) AS min_price
+            FROM wands
+            inner join wands_property
+            ON wands.code = wands_property.code
+            WHERE wands_property.is_evil = 0
+            GROUP BY wands.code, wands.power) min_prices
+ON wands.code = min_prices.code
+   AND wands.power = min_prices.power
+   AND wands.coins_needed = min_prices.min_price
+ORDER BY wands.power DESC, min_prices.age DESC
+
+
 # 7. Challenges (Medium)
+
 
 # 8. Contest Leaderboard (Medium)
 with b as (
