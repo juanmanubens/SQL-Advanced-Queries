@@ -338,7 +338,10 @@ ORDER BY wands.power DESC, min_prices.age DESC;
 
 
 # 7. Challenges (Medium)
-
+WITH t AS (SELECT TOP 50 PERCENT * 
+FROM STATION ORDER BY LAT_N ASC)
+SELECT TOP 1 CAST(ROUND(LAT_N, 4) AS decimal(10,4)) 
+FROM t ORDER BY LAT_N DESC
 
 # 8. Contest Leaderboard (Medium)
 with b as (
@@ -388,12 +391,47 @@ F. Alternative Queries
 
 
 # 1. Draw The Triangle 1
-
+DECLARE @i INT = 20
+WHILE (@i > 0) 
+BEGIN
+   PRINT REPLICATE('* ', @i) 
+   SET @i = @i - 1
+END
 
 # 2.Draw The Triangle 2
+DECLARE @i INT = 0
+WHILE (@i < 21) 
+BEGIN
+   PRINT REPLICATE('* ', @i) 
+   SET @i = @i + 1
+END
+
 
 # 3. Print Prime Numbers (Medium)
-
+DECLARE @string VARCHAR(1000)
+DECLARE @primes TABLE 
+(
+    num int NOT NULL
+);
+WITH temp AS
+(
+    SELECT 2 AS Value 
+    UNION ALL
+    SELECT t.Value+1 AS VAlue 
+    FROM temp t
+    WHERE t.Value < 1001
+)
+INSERT INTO @primes (num) (SELECT * 
+FROM temp t
+WHERE NOT EXISTS
+            (   SELECT 1 FROM temp t2
+                WHERE t.Value % t2.Value = 0 
+                AND t.Value != t2. Value
+            ))
+OPTION (MAXRECURSION 0)
+SELECT @string=COALESCE(@string + '&', '') + CONVERT(varchar(10), num)
+FROM @primes
+PRINT @string;
 
 
 
