@@ -9,78 +9,104 @@ A. Basic Select
 
 
 # 1. Revising the Select Query I (Easy)
-SELECT * FROM CITY WHERE COUNTRYCODE = "USA" \
-AND POPULATION > 100000
+SELECT * 
+FROM CITY 
+WHERE COUNTRYCODE = "USA" AND POPULATION > 100000;
 
 # 2. Revising the Select Query I (Easy)
-SELECT NAME FROM CITY WHERE COUNTRYCODE = "USA" \
-AND POPULATION > 120000
+SELECT NAME 
+FROM CITY 
+WHERE COUNTRYCODE = "USA" AND POPULATION > 120000;
 
 # 3. Select All (Easy)
-SELECT * FROM CITY 
+SELECT * 
+FROM CITY;
 
 # 4. Select By ID (Easy)
-SELECT * FROM CITY WHERE ID = 1661
+SELECT * 
+FROM CITY 
+WHERE ID = 1661;
 
-# 5. Japanese Cities' Attributes (Easy)
-SELECT * FROM CITY WHERE COUNTRYCODE = 'JPN'
+# 5. Japanese Cities Attributes (Easy)
+SELECT * 
+FROM CITY 
+WHERE COUNTRYCODE = 'JPN';
 
-# 6. Japanese Cities' Names (Easy)
-SELECT NAME FROM CITY WHERE COUNTRYCODE = 'JPN'
+# 6. Japanese Cities Names (Easy)
+SELECT NAME 
+FROM CITY 
+WHERE COUNTRYCODE = 'JPN';
 
 # 7. Weather Observation Station 1 (Easy)
- SELECT CITY, STATE FROM STATION
+ SELECT CITY, STATE 
+ FROM STATION;
 
 # 8. Weather Observation Station 3 (Easy)
-SELECT DISTINCT CITY FROM STATION WHERE MOD(ID,2) = 0
+SELECT DISTINCT CITY 
+FROM STATION 
+WHERE MOD(ID,2) = 0;
 
 # 9. Weather Observation Station 4 (Easy)
-SELECT COUNT(CITY) - COUNT(DISTINCT(CITY)) FROM STATION 
+SELECT COUNT(CITY) - COUNT(DISTINCT(CITY)) 
+FROM STATION;
 
 
 # 10. Weather Observation Station 5 (Easy)
-SELECT CITY, LENGTH(CITY) FROM STATION ORDER BY LENGTH(CITY) ASC, CITY  LIMIT 1; 
-SELECT CITY, LENGTH(CITY) FROM STATION ORDER BY LENGTH(CITY) DESC, CITY  LIMIT 1;
+SELECT CITY, LENGTH(CITY) 
+FROM STATION 
+ORDER BY LENGTH(CITY) ASC, CITY  LIMIT 1; 
+SELECT CITY, LENGTH(CITY) 
+FROM STATION 
+ORDER BY LENGTH(CITY) DESC, CITY  LIMIT 1;
 
 # 11. Weather Observation Station 6 (Easy)
-SELECT DISTINCT CITY FROM STATION WHERE SUBSTR(CITY,1,1) IN ('A','E','I','O','U')
+SELECT DISTINCT CITY 
+FROM STATION 
+WHERE SUBSTR(CITY,1,1) IN ('A','E','I','O','U');
 
 # 12. Weather Observation Station 7 (Easy)
-SELECT DISTINCT CITY FROM STATION WHERE SUBSTR(CITY,LENGTH(CITY),LENGTH(CITY)) IN ('A','E','I','O','U')
+SELECT DISTINCT CITY 
+FROM STATION 
+WHERE SUBSTR(CITY,LENGTH(CITY),LENGTH(CITY)) IN ('A','E','I','O','U');
 
 # 13. Weather Observation Station 8 (Easy)
-SELECT DISTINCT CITY FROM STATION 
+SELECT DISTINCT CITY 
+FROM STATION 
 WHERE (SUBSTRING(CITY,LEN(CITY), LEN(CITY)) IN ('A','E','I','O','U')) 
-AND (SUBSTRING(CITY,1,1) IN ('A','E','I','O','U'))
+AND (SUBSTRING(CITY,1,1) IN ('A','E','I','O','U'));
 
 # 14. Weather Observation Station 9 (Easy)
-SELECT DISTINCT CITY FROM STATION WHERE SUBSTRING(CITY,1,1) NOT IN ('A','E','I','O','U')
+SELECT DISTINCT CITY 
+FROM STATION 
+WHERE SUBSTRING(CITY,1,1) NOT IN ('A','E','I','O','U');
 
 # 15. Weather Observation Station 10 (Easy)
-SELECT DISTINCT CITY FROM STATION WHERE SUBSTRING(CITY,LEN(CITY), LEN(CITY)) NOT IN ('A','E','I','O','U')
+SELECT DISTINCT CITY 
+FROM STATION 
+WHERE SUBSTRING(CITY,LEN(CITY), LEN(CITY)) NOT IN ('A','E','I','O','U');
 
 # 16. Weather Observation Station 11 (Easy)
 SELECT DISTINCT CITY FROM STATION 
 WHERE (SUBSTRING(CITY,LEN(CITY), LEN(CITY)) NOT IN ('A','E','I','O','U')) 
-OR (SUBSTRING(CITY,1,1) NOT IN ('A','E','I','O','U'))
+OR (SUBSTRING(CITY,1,1) NOT IN ('A','E','I','O','U'));
 
 # 17. Weather Observation Station 12 (Easy)
 SELECT DISTINCT CITY FROM STATION 
 WHERE (SUBSTRING(CITY,LEN(CITY), LEN(CITY)) NOT IN ('A','E','I','O','U')) 
-AND (SUBSTRING(CITY,1,1) NOT IN ('A','E','I','O','U'))
+AND (SUBSTRING(CITY,1,1) NOT IN ('A','E','I','O','U'));
 
 # 18. Higher Than 75 Marks (Easy)
 SELECT Name FROM STUDENTS
 WHERE Marks > 75 
-ORDER BY SUBSTRING(Name,LEN(Name)-2,LEN(Name)) ASC, ID ASC
+ORDER BY SUBSTRING(Name,LEN(Name)-2,LEN(Name)) ASC, ID ASC;
 
 # 19. Employee Names (Easy)
-SELECT name FROM Employee ORDER BY name ASC
+SELECT name FROM Employee ORDER BY name ASC;
 
 # 20. Employee Salaries (Easy)
 SELECT name FROM Employee 
 WHERE salary > 2000 AND months < 10
-ORDER BY employee_id ASC
+ORDER BY employee_id ASC;
 
 
 
@@ -120,7 +146,7 @@ FROM (SELECT CASE WHEN Occupation = 'Doctor' THEN name END AS Doctor
       , CASE WHEN Occupation = 'Actor' THEN name END AS Actor
       , RANK() OVER (PARTITION BY Occupation ORDER BY Name) AS list
     FROM Occupations) x
-GROUP BY list
+GROUP BY list;
 
 # 4. Binary Tree Nodes (Medium)
 SELECT N, CASE 
@@ -143,7 +169,7 @@ SELECT c.company_code, c.founder, e.LM, e.SM, e.MM, e.EM
 FROM Company c
 LEFT JOIN e
 ON c.company_code = e.company_code
-ORDER BY c.company_code ASC
+ORDER BY c.company_code ASC;
 
 
 /*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
@@ -154,46 +180,91 @@ C. Aggregation
 # 1.  Revising Aggregations - The Count Function (Easy)
 SELECT COUNT(*)
 FROM CITY
-WHERE POPULATION > 100000
+WHERE POPULATION > 100000;
 
 # 2.  Revising Aggregations - The Sum Function (Easy)
 SELECT SUM(POPULATION)
 FROM CITY
 GROUP BY DISTRICT
-HAVING DISTRICT = 'California'
+HAVING DISTRICT = 'California';
 
 # 3.  Revising Aggregations - Averages (Easy)
-
+SELECT AVG(POPULATION)
+FROM CITY
+WHERE DISTRICT = 'California';
 
 # 4. Average Population (Easy)
+SELECT ROUND(AVG(POPULATION),0)
+FROM CITY;
 
 # 5. Japan Population (Easy)
+SELECT SUM(POPULATION)
+FROM CITY
+WHERE COUNTRYCODE = 'JPN';
 
 # 6. Population Density Difference (Easy)
+SELECT MAX(POPULATION) - MIN(POPULATION)
+FROM CITY;
 
 # 7. The Blunder (Easy)
+SELECT CEILING(AVG(Salary - CAST(REPLACE(Salary,'0','') as decimal)))
+FROM EMPLOYEES;
 
 # 8. Top Earners (Easy)
+SELECT (months * salary), COUNT(*)
+FROM employee
+WHERE (months * salary) IN (SELECT MAX(months * salary) AS 'maxearnings' 
+                            FROM employee)
+GROUP BY (months * salary);
 
 # 9. Weather Observation Station 2 (Easy)
+SELECT ROUND(SUM(LAT_N), 2), ROUND(SUM(LONG_W), 2)
+FROM STATION;
 
 # 10. Weather Observation Station 13 (Easy)
+SELECT TRUNCATE(SUM(LAT_N), 4)
+FROM STATION
+WHERE LAT_N BETWEEN 38.7880 AND 137.2345;
 
 # 11. Weather Observation Station 14 (Easy)
+SELECT ROUND(MAX(LAT_N), 4) 
+FROM STATION 
+WHERE LAT_N < 137.2345;
 
 # 12. Weather Observation Station 15 (Easy)
+SELECT ROUND(LONG_W, 4) 
+FROM STATION 
+WHERE LAT_N = (SELECT MAX(LAT_N) FROM STATION WHERE LAT_N < 137.2345);
 
 # 13. Weather Observation Station 16 (Easy)
+SELECT ROUND(MIN(LAT_N), 4) 
+FROM STATION WHERE LAT_N > 38.7780;
 
 # 14. Weather Observation Station 17 (Easy)
+SELECT ROUND(LONG_W, 4) 
+FROM STATION 
+WHERE LAT_N = (SELECT MIN(LAT_N) 
+               FROM STATION 
+               WHERE LAT_N > 38.7780);
+
 
 # 15. Weather Observation Station 18 (Medium)
+SELECT ROUND(MAX(LAT_N) - MIN(LAT_N) + MAX(LONG_W) - MIN(LONG_W), 4) 
+FROM STATION;
+
+
 
 # 16. Weather Observation Station 19 (Medium)
 
+
+
+
+
 # 17. Weather Observation Station 20 (Medium)
 
-# 18.
+
+
+
 
 
 
@@ -230,7 +301,7 @@ with s as (
 ) SELECT s.Student, g.Grade, s.Marks FROM s
 LEFT JOIN Grades g 
 ON s.Marks BETWEEN g.Min_Mark AND g.Max_Mark
-ORDER BY g.Grade DESC, s.Student ASC, s.Marks ASC
+ORDER BY g.Grade DESC, s.Student ASC, s.Marks ASC;
 
 # 5. Top Competitors (Medium)
 WITH s AS (
@@ -244,10 +315,10 @@ SELECT id, hacker FROM s
 WHERE score = maxscore
 GROUP BY id, hacker
 HAVING count(id) > 1
-ORDER BY count(id) DESC, id ASC
+ORDER BY count(id) DESC, id ASC;
 
 
-# 6. Ollivander's Inventory (Medium)
+# 6. Ollivanders Inventory (Medium)
 
 ## REVIEW THIS
 
@@ -262,7 +333,7 @@ inner join (SELECT wands.code, wands.power, min(wands_property.age) as age, min(
 ON wands.code = min_prices.code
    AND wands.power = min_prices.power
    AND wands.coins_needed = min_prices.min_price
-ORDER BY wands.power DESC, min_prices.age DESC
+ORDER BY wands.power DESC, min_prices.age DESC;
 
 
 # 7. Challenges (Medium)
@@ -278,7 +349,7 @@ FROM Hackers a
 LEFT JOIN b ON a.hacker_id = b.hacker_id
 GROUP BY a.hacker_id, a.name
 HAVING sum(b.maxscore) IS NOT NULL
-ORDER BY sum(b.maxscore) DESC, a.hacker_id ASC
+ORDER BY sum(b.maxscore) DESC, a.hacker_id ASC;
 
 
 
