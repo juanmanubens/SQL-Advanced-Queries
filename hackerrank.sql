@@ -433,7 +433,11 @@ SELECT @string=COALESCE(@string + '&', '') + CONVERT(varchar(10), num)
 FROM @primes
 PRINT @string;
 
-
+             
+/* 
+ Challenges # 52
+*/
+select a.hacker_id, a.name, b.challenges_created from Hackers as a inner join (select hacker_id, count(distinct challenge_id) as challenges_created from Challenges group by hacker_id) as b on a.hacker_id = b.hacker_id order by challenges_created desc, hacker_id desc;
 
 
 
